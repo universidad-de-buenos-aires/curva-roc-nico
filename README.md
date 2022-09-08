@@ -6,23 +6,36 @@
 
 #instalo el paquete
 
+
+
 install.packages("pROC")
 
 library(pROC)
 
 install.packages("knitr")
+
 install.packages("tinytex")
+
 install.packages("ipak")
+
 install.packages("psych")
+
 library(psych)
+
 packages <- c("haven","apa","dplyr","tidyBF","BayesFactor","ggstatsplot")
 
 
 #nombre de la base
+
+
+
 craft1 <- BASE_CRAFT1
 
 
+
 #Diferencias entre grupos
+
+
 
 t.test(craft$edad~craft$dx_clinico)
 
@@ -38,8 +51,15 @@ with(craft,tapply(escolaridad,dx_clinico,mean))
 
 with(craft_normas,tapply(craft_inm_text,grupo_edad,sd))
 
+
+
 #creación de la curva
+
+
 #curva CRAFT inmediato
+
+
+
 
 craft_inm_curva <- roc(craft$dx_clinico, craft$craft_inm_text)
 
@@ -50,13 +70,20 @@ plot(craft_inm_curva)
 
 #curva RAVLT inmediato
 
+
+
 ravlt_inm_curva <- lines.roc(craft$dx_clinico, craft$ravlt_aprendizaje, col = "#32374c")
 
 auc(ravlt_inm_curva)
 
 plot(ravlt_inm_curva)
 
+
+
 #curva CRAFT diferido
+
+
+
 
 craft_dif_curva <- lines.roc(craft$dx_clinico, craft$craft_dif_text, col = "#32374c")
 
@@ -72,7 +99,11 @@ auc(ravlt_dif_curva)
 
 plot(ravlt_dif_curva)
 
+
+
 #curva CRAFT reconocimiento
+
+
 
 craft_rec_curva <- lines.roc(craft$dx_clinico, craft$craft_total, col = "#32374c")
 
@@ -81,7 +112,10 @@ auc(craft_rec_curva)
 plot(craft_rec_curva, col = "#fba31b")
 
 
+
 #curva RAVLT reconocimiento
+
+
 
 ravlt_rec_curva <- lines.roc(craft$dx_clinico, craft$ravlt_reconocimiento, col = "#32374c")
 
@@ -92,6 +126,8 @@ plot(ravlt_rec_curva)
 
 #graficamos ambas curvas (REC)
 
+
+
 ravlt_rec_curva <- lines.roc(craft$dx_clinico, craft$ravlt_reconocimiento, col = "#32374c")
 
 curvas_rec <- roc.test(craft_rec_curva,ravlt_rec_curva)
@@ -100,7 +136,12 @@ text(.5, .5, labels=paste("p-value =", format.pval(curvas_rec$p.value)), adj=c(0
 
 legend("bottomright", legend=c("Craft Story 21 reconocimiento", "Reconocimiento - RAVLT"), col =c("#fba31b", "#32374c"), lwd=2)
 
+
+
+
 #intervalos de confianza, punto de corte, etc.
+
+
 
 rocobj <- roc(craft$dx_clinico, craft$craft_total, main = "Craft Story 21: Curva ROC con intervalos de confianza", percent = TRUE, ci = TRUE, print.auc = TRUE)
 
